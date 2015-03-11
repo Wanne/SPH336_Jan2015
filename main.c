@@ -13,7 +13,7 @@
 
 #include"gpio.h"
 #include"uart.h"
-
+#include "enabler.h"
 
 void delay(void);
 
@@ -36,13 +36,24 @@ int main(void){
 	//initialize GPIO ports
 	gpio_init();
 
-	//Loop forever
+
 	while(1)
 	{
-		toggle_LED1(); 
-		delay();
-		if(data_available()){
-			byte = uart_read();
+
+		byte = uart_read();
+
+		switch (byte) {
+			case '0': enabler(0); break;//toggle_LED0(); byte='n'; break;
+			case '1': enabler(1); break;//toggle_LED1(); byte='n'; break;
+			case '2': enabler(2); break;//toggle_LED2(); byte='n'; break;
+			case '3': enabler(3); break;//toggle_LED3(); byte='n'; break;
+			case '4': enabler(4); break;//toggle_LED4(); byte='n'; break;
+			case '5': enabler(5); break;//toggle_LED5(); byte='n'; break;
+			case '6': enabler(6); break;//toggle_LED6(); byte='n'; break;
+			case '7': enabler(7); break;//toggle_LED7(); byte='n'; break;
+			case '8': enabler(8); break;//toggle_LED8(); byte='n'; break;
+			case '9': enabler(9); break;//toggle_LED9(); byte='n'; break;
+			default: main(); break;//toggle_LED0(); goto LOOP; break;
 		}
 		delay();
 	}
@@ -53,7 +64,7 @@ int main(void){
 
 
 /*
-	brief  Silly delay
+	brief silly delay
 */
 void delay(void)
 {
